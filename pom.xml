@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.aviron</groupId>
-	<artifactId>abacus</artifactId>
+	<artifactId>abakus</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aviron-abacus</name>
+	<name>aviron-abakus</name>
 	<description>Description</description>
 	<properties>
 		<java.version>1.8</java.version>
