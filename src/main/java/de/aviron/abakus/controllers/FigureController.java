@@ -19,22 +19,22 @@ public class FigureController {
     @Autowired
     private FigureService service;
 
-    @GetMapping(value="/abakus/chars")
+    @GetMapping(value="/abakus/figure/all")
     List<Figure> getAllCharacters() {
         return service.getAllCharacters();
     }
 
-    @GetMapping(value="/abakus/chars/{id}")
+    @GetMapping(value="/abakus/figure/{id}")
     Figure getCharacter(@PathVariable Integer id) {
         return service.getCharacter(id);
     }
 
-    @PostMapping(value="/abakus/chars/add")
+    @PostMapping(value="/abakus/figure/add")
     Figure addCharacter(@RequestBody Figure character) {
         return service.addCharacter(character);
     }
 
-    @PutMapping(value="/abakus/{id}/set")
+    @PutMapping(value="/abakus/figure/set/{id}")
     Figure setCharacter(@PathVariable Integer id, @RequestBody Figure character) {
         return service.setCharacter(id, character);
     }
