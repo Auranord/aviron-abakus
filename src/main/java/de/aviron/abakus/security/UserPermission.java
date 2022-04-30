@@ -2,7 +2,9 @@ package de.aviron.abakus.security;
 
 public enum UserPermission {
     FIGURE_READ("figure:read"),
-    FIGURE_WRITE("figure:write");
+    FIGURE_WRITE("figure:write"),
+    USER_READ("user:read"),
+    USER_WRITE("user:write");
 
     private final String permission;
 

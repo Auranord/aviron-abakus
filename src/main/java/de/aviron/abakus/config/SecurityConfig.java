@@ -3,8 +3,6 @@ package de.aviron.abakus.config;
 import de.aviron.abakus.security.JwtAuthenticationEntryPoint;
 import de.aviron.abakus.security.JwtAuthenticationFilter;
 
-import static de.aviron.abakus.security.UserRole.ADMIN;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,20 +45,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         
         http
-        .cors().and().csrf().disable()       // TODO: enable
+        .csrf().disable() // TODO: enable
         .authorizeRequests()
             // Grant permissions for public paths
             .antMatchers("/", "/index", "/register", "/login").permitAll()
-            // Grant permissions for all paths to role ADMIN
-            .antMatchers("/**").hasRole(ADMIN.name())
             .anyRequest()
             .authenticated()
         .and()
-        .exceptionHandling()
-            .authenticationEntryPoint(unauthorizedHandler)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedHandler);
         
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
