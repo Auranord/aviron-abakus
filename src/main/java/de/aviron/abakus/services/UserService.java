@@ -23,15 +23,23 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
+    public User getUserByEmail(String email) {
+        return repository.findUserByEmail(email).orElse(null);
+    }
+
     public User addUser(User user) {
         return repository.save(user);
     }
 
     public User setUser(Integer id, User user) {
-        User oldUser = repository.findById(id).orElse(null);
-        oldUser.setEmail(user.getEmail());
-        oldUser.setPassword(user.getPassword());
-        return repository.save(oldUser);
+        return repository.save(user);
     }
 
+    public User updateUser(User user) {
+        User oldUser = repository.findById(user.getId()).orElse(null);
+        if(oldUser == null)
+            return null;
+            
+        return repository.save(user);
+    }
 }

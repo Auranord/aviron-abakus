@@ -1,9 +1,10 @@
 package de.aviron.abakus.controllers;
 
 import de.aviron.abakus.entities.User;
-import de.aviron.abakus.repositories.UserRepository;
 import de.aviron.abakus.requests.AuthRequest;
 import de.aviron.abakus.security.JwtTokenProvider;
+import de.aviron.abakus.services.UserService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,32 +15,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("")
 public class AuthController {
 
-    private UserRepository userRepository;
-
+    private UserService userService;
+    
     private PasswordEncoder passwordEncoder;
 
     private AuthenticationManager authenticationManager;
 
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
+    public AuthController(UserService userService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> register(@RequestBody AuthRequest authRequest) {
-        Optional<User> userOptional = userRepository.findUserByEmail(authRequest.getEmail());
+    public ResponseEntity<User> RegisterUser(@RequestBody AuthRequest authRequest) {
+        User presentUser = userService.getUserByEmail(authRequest.getEmail());
 
-        if (userOptional.isPresent()) {
+        if (presentUser != null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -47,13 +46,13 @@ public class AuthController {
         user.setEmail(authRequest.getEmail());
         user.setPassword(passwordEncoder.encode(authRequest.getPassword()));
 
-        User created = userRepository.save(user);
+        User created = userService.addUser(user);
 
         return ResponseEntity.ok(created);
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> LoginUser(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authRequest.getEmail(),
@@ -65,7 +64,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "/logout")
-    public ResponseEntity<String> logout() {
+    public ResponseEntity<String> LogoutUser() {
 
         // TODO: Logout
 

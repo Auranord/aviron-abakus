@@ -1,7 +1,7 @@
 package de.aviron.abakus.security;
 
 import de.aviron.abakus.entities.User;
-import de.aviron.abakus.repositories.UserRepository;
+import de.aviron.abakus.services.UserService;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,21 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("No User found with email: " + username));
+        User user = userService.getUserByEmail(username);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                UserRole.ADMIN.getGrantedAuthorities() // TODO: get authorities from database
+                user.getRole().getGrantedAuthorities()
         );
     }
 }

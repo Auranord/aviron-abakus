@@ -10,9 +10,9 @@ import com.google.common.collect.Sets;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public enum UserRole {
+    NONE(Sets.newHashSet()),
     TRIAL(Sets.newHashSet(FIGURE_READ)),
     MEMBER(Sets.newHashSet(FIGURE_READ)),
-    BANNED(Sets.newHashSet()),
     RECRUITER(Sets.newHashSet(FIGURE_READ)),
     GAMEMASTER(Sets.newHashSet(FIGURE_READ, FIGURE_WRITE)),
     ADMIN(Sets.newHashSet(FIGURE_READ, FIGURE_WRITE));

@@ -1,6 +1,8 @@
 package de.aviron.abakus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import de.aviron.abakus.security.UserRole;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,5 +20,7 @@ public class User {
 
     @JsonIgnore
     private String password;
+
+    private UserRole role = UserRole.NONE;
 
 }
