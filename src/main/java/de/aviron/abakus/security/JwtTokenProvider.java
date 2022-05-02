@@ -2,10 +2,14 @@ package de.aviron.abakus.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import de.aviron.abakus.config.JwtConfig;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -15,18 +19,21 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenProvider {
 
-    @Value("${app.jwtSecret}")
-    private String jwtSecret;
+    private final JwtConfig jwtConfig;
+
+    public JwtTokenProvider(JwtConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
 
     public String generateToken(String userEmail) {
         Instant now = Instant.now();
-        Instant expiration = now.plus(7, ChronoUnit.DAYS);
+        Instant expiration = now.plus(jwtConfig.getTokenExpirationDays(), ChronoUnit.DAYS);
 
         return Jwts.builder()
                 .setSubject(userEmail)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expiration))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret())
                 .compact();
 
     }
@@ -39,7 +46,7 @@ public class JwtTokenProvider {
     public String getUserMailFromToken(String token) {
         Claims claims = Jwts
                 .parser()
-                .setSigningKey(jwtSecret)
+                .setSigningKey(jwtConfig.getSecret())
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -48,7 +55,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(jwtConfig.getSecret()).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
