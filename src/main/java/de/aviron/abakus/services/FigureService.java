@@ -2,16 +2,16 @@ package de.aviron.abakus.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.aviron.abakus.repositories.FigureRepository;
+import lombok.AllArgsConstructor;
 import de.aviron.abakus.entities.Figure;
 
 @Service
+@AllArgsConstructor
 public class FigureService {
     
-    @Autowired
     private FigureRepository repository;
 
     public List<Figure> getAllCharacters() {

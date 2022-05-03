@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.aviron.abakus.entities.User;
 import de.aviron.abakus.services.UserService;
+import lombok.AllArgsConstructor;
 
 
-@RestController
+@RestController                 // TODO: only use ResponeEntity as return
 @RequestMapping("/abakus/user")
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
     private UserService service;
 
     @GetMapping(value="/all")

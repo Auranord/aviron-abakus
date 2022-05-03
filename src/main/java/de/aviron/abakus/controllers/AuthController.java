@@ -4,6 +4,7 @@ import de.aviron.abakus.entities.User;
 import de.aviron.abakus.requests.AuthRequest;
 import de.aviron.abakus.security.JwtTokenProvider;
 import de.aviron.abakus.services.UserService;
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,22 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("")
+@AllArgsConstructor
 public class AuthController {
 
     private UserService userService;
-    
     private PasswordEncoder passwordEncoder;
-
     private AuthenticationManager authenticationManager;
-
     private JwtTokenProvider jwtTokenProvider;
-
-    public AuthController(UserService userService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<User> RegisterUser(@RequestBody AuthRequest authRequest) {
@@ -66,7 +58,7 @@ public class AuthController {
     @PostMapping(value = "/logout")
     public ResponseEntity<String> LogoutUser() {
 
-        // TODO: Logout
+        // TODO: Logout (Maybe only on frontend?)
 
         return ResponseEntity.ok().build();
     }

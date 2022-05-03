@@ -2,18 +2,18 @@ package de.aviron.abakus.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.aviron.abakus.entities.User;
 import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 
 
 @Service
+@AllArgsConstructor
 public class UserService {
     
-    @Autowired
     private UserRepository repository;
 
     public List<User> getAllUsers() {
