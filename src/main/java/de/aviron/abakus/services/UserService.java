@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.aviron.abakus.entities.User;
+import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.repositories.UserRepository;
 
 
@@ -40,6 +41,12 @@ public class UserService {
         if(oldUser == null)
             return null;
             
+        return repository.save(user);
+    }
+
+    public User setRole(Integer id, UserRole role) {
+        User user = repository.findById(id).orElse(null);
+        user.setRole(role);
         return repository.save(user);
     }
 }
