@@ -1,6 +1,6 @@
-package de.aviron.abakus.security;
+package de.aviron.abakus.enums;
 
-import static de.aviron.abakus.security.UserPermission.*;
+import static de.aviron.abakus.enums.UserPermission.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;

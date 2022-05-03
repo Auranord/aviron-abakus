@@ -1,4 +1,4 @@
-package de.aviron.abakus.security;
+package de.aviron.abakus.enums;
 
 public enum UserPermission {
     FIGURE_READ("figure:read"),
