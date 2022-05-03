@@ -1,9 +1,9 @@
 package de.aviron.abakus.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -12,10 +12,30 @@ import lombok.Data;
 public class Figure {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Integer owner;
+    // Besitzer
+    @ManyToOne
+    @JoinColumn(name="owner_id")
+    private User owner;
+
+    // Name
     private String name;
+
+    // Barvermögen
+    private Integer money;
+
+    // Botenpunkte
+    private Integer activity;
+
+
+    // ################## Relations ##################
+
+    @OneToMany(mappedBy="author")
+    private Collection<JournalArticle> figureArticles = new ArrayList<>();
+
+    @OneToMany(mappedBy="author")
+    private Collection<JournalLetter> figureLetters = new ArrayList<>();
 
 }
