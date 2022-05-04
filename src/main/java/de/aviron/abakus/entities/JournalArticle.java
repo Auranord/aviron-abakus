@@ -33,7 +33,7 @@ public class JournalArticle {
     private Figure author;
 
     // Anonym
-    private Boolean anonymous;
+    private Boolean isAnonymous;
 
     // Bild
     @ManyToOne
@@ -49,24 +49,24 @@ public class JournalArticle {
     @JoinColumn(name="answer_id")
     private JournalArticle answer;
 
-    // Reihe x
+    // Reihe
     @ManyToOne
     @JoinColumn(name="collection_id")
     private JournalCollection collection;
 
-    // Event x
+    // Event
     @ManyToOne
     @JoinColumn(name="event_id")
     private JournalEvent event;
 
     // Eingereicht
-    private Boolean done;
+    private Boolean isDone;
 
     // Artikel Wert
     private Integer value;
 
     // Sichtbar
-    private Boolean visible;
+    private Boolean isVisible;
 
     // Zensurgrund
     private String reason;

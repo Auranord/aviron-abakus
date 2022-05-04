@@ -81,4 +81,31 @@ public class User {
     @OneToMany(mappedBy="uploader")
     private Collection<Image> userPictures = new ArrayList<>();
 
+    @OneToMany(mappedBy="sender")
+    private Collection<Message> userSender = new ArrayList<>();
+
+    @OneToMany(mappedBy="receiver")
+    private Collection<Message> userReceiver = new ArrayList<>();
+    
+
+    // ################## Possessions ##################
+
+    @ManyToMany(mappedBy = "possessors")
+    private Collection<MailBox> possessorBoxes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "possessors")
+    private Collection<Signing> possessorSigning = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "possessors")
+    private Collection<Seal> possessorSeals = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "authorized")
+    private Collection<MailBox> authorizedBoxes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "authorized")
+    private Collection<Signing> authorizedSigning = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "authorized")
+    private Collection<Seal> authorizedSeals = new ArrayList<>();
+
 }

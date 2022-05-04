@@ -19,6 +19,9 @@ public class JournalIssue {
     // Datum der Ausgabe
     private LocalDate date;
 
+
+    // ################## Relations ##################
+
     @OneToMany(mappedBy="issue")
     private Collection<JournalArticle> articles = new ArrayList<>();
     

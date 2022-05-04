@@ -31,14 +31,9 @@ public class JournalLetter {
     private String content;
     
     // Sichtbar
-    private Boolean visible;
+    private Boolean isVisible;
     
     // Zensurgrund
     private String reason;
 
-    // ################## Relations ##################
-
-
-    
-    
 }
