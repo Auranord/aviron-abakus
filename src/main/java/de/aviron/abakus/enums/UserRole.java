@@ -11,11 +11,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public enum UserRole {
     NONE(Sets.newHashSet()),
-    TRIAL(Sets.newHashSet(FIGURE_READ)),
-    MEMBER(Sets.newHashSet(FIGURE_READ)),
-    RECRUITER(Sets.newHashSet(FIGURE_READ)),
-    GAMEMASTER(Sets.newHashSet(FIGURE_READ, FIGURE_WRITE)),
-    ADMIN(Sets.newHashSet(FIGURE_READ, FIGURE_WRITE));
+    TRIAL(Sets.newHashSet(USER_READ, FIGURE_READ)),
+    MEMBER(Sets.newHashSet(USER_READ, FIGURE_READ)),
+    RECRUITER(Sets.newHashSet(USER_READ, FIGURE_READ)),
+    GAMEMASTER(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE)),
+    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE));
 
     private final Set<UserPermission> permissions;
 
