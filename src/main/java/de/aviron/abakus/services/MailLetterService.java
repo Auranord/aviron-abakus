@@ -27,6 +27,7 @@ public class MailLetterService {
     }
 
     public MailLetter setMailLetter(Integer id, MailLetter mailLetter) {
+        mailLetter.setId(id);
         return repository.save(mailLetter);
     }
 

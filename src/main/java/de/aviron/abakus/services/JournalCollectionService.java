@@ -27,6 +27,7 @@ public class JournalCollectionService {
     }
 
     public JournalCollection setJournalCollection(Integer id, JournalCollection journalCollection) {
+        journalCollection.setId(id);
         return repository.save(journalCollection);
     }
 

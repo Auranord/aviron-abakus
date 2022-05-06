@@ -26,7 +26,8 @@ public class FigureService {
         return repository.save(figure);
     }
 
-    public Figure setFigure(Integer id,Figure figure) {
+    public Figure setFigure(Integer id, Figure figure) {
+        figure.setId(id);
         return repository.save(figure);
     }
 

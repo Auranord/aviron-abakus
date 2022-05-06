@@ -27,6 +27,7 @@ public class MailBoxService {
     }
 
     public MailBox setMailBox(Integer id, MailBox mailBox) {
+        mailBox.setId(id);
         return repository.save(mailBox);
     }
 

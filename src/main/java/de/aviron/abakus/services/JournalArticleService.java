@@ -27,6 +27,7 @@ public class JournalArticleService {
     }
 
     public JournalArticle setJournalArticle(Integer id, JournalArticle journalArticle) {
+        journalArticle.setId(id);
         return repository.save(journalArticle);
     }
 

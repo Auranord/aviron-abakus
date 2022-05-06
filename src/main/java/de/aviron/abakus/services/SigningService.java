@@ -27,6 +27,7 @@ public class SigningService {
     }
 
     public Signing setSigning(Integer id, Signing signing) {
+        signing.setId(id);
         return repository.save(signing);
     }
 

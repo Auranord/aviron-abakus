@@ -27,6 +27,7 @@ public class JournalEventService {
     }
 
     public JournalEvent setJournalEvent(Integer id, JournalEvent journalEvent) {
+        journalEvent.setId(id);
         return repository.save(journalEvent);
     }
 

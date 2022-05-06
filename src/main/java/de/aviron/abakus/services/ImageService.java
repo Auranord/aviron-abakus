@@ -27,6 +27,7 @@ public class ImageService {
     }
 
     public Image setImage(Integer id, Image image) {
+        image.setId(id);
         return repository.save(image);
     }
 

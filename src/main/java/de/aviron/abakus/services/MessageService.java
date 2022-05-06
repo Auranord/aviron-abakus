@@ -27,6 +27,7 @@ public class MessageService {
     }
 
     public Message setMessage(Integer id, Message message) {
+        message.setId(id);
         return repository.save(message);
     }
 

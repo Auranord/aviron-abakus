@@ -33,6 +33,7 @@ public class UserService {
     }
 
     public User setUser(Integer id, User user) {
+        user.setId(id);
         return repository.save(user);
     }
 

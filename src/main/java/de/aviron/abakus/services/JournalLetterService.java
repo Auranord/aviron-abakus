@@ -27,6 +27,7 @@ public class JournalLetterService {
     }
 
     public JournalLetter setJournalLetter(Integer id, JournalLetter journalLetter) {
+        journalLetter.setId(id);
         return repository.save(journalLetter);
     }
 

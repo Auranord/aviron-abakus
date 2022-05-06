@@ -27,6 +27,7 @@ public class SealService {
     }
 
     public Seal setSeal(Integer id, Seal seal) {
+        seal.setId(id);
         return repository.save(seal);
     }
 
