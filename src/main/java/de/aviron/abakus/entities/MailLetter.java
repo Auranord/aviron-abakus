@@ -41,15 +41,15 @@ public class MailLetter {
     // ################## Relations ##################
 
     // Unterschriften
-    @ManyToMany(mappedBy = "signingLetters")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "signingLetters") @JsonIgnore
     private Collection<Signing> signings = new ArrayList<>();
     
     // Siegel
-    @ManyToMany(mappedBy = "unbrokenSealLetters")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "unbrokenSealLetters") @JsonIgnore
     private Collection<Seal> unbrokenSeals = new ArrayList<>();
 
     // gebrochene Siegel
-    @ManyToMany(mappedBy = "brokenSealLetters")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "brokenSealLetters") @JsonIgnore
     private Collection<Seal> brokenSeals = new ArrayList<>();
 
 }

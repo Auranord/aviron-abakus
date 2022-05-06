@@ -47,11 +47,11 @@ public class Message {
     
     // ################## Relations ##################
 
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="reference_id")
     Message reference;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="reference")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="reference") @JsonIgnore
     Collection<Message> answers;
 
 }

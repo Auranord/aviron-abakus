@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +28,7 @@ public class JournalCollection {
 
     // ################## Relations ##################
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="collection")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="collection") @JsonIgnore
     private Collection<JournalArticle> collectionArticles = new ArrayList<>();
     
 }

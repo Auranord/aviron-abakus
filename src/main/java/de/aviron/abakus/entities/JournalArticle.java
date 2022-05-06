@@ -78,10 +78,10 @@ public class JournalArticle {
 
     // ################## Relations ##################
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="answer")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="answer") @JsonIgnore
     private Collection<JournalArticle> articleAnswers = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="article")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="article") @JsonIgnore
     private Collection<JournalLetter> articleLetters = new ArrayList<>();
     
 }

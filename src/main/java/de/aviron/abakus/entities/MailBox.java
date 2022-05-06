@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,16 +32,16 @@ public class MailBox {
     // ################## Relations ##################
 
     // Besitzer
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "mailbox_possessors", joinColumns = @JoinColumn(name = "box_id"), inverseJoinColumns = @JoinColumn(name = "figure_id"))
     private Collection<Figure> possessors = new ArrayList<>();
 
     // Benutzer
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "mailbox_authorized", joinColumns = @JoinColumn(name = "box_id"), inverseJoinColumns = @JoinColumn(name = "figure_id"))
     private Collection<Figure> authorized = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="box")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="box") @JsonIgnore
     private Collection<MailLetter> boxLetters = new ArrayList<>();
 
 }

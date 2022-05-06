@@ -35,7 +35,7 @@ public class User {
     private UserRole role = UserRole.NONE;
 
     // Bild
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="picture_id")
     private Image picture;
 
@@ -77,37 +77,37 @@ public class User {
     
     // ################## Relations ##################
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="owner") @JsonIgnore
     private Collection<Figure> userFigures = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="uploader")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="uploader") @JsonIgnore
     private Collection<Image> userPictures = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="sender")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="sender") @JsonIgnore
     private Collection<Message> userSender = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="receiver")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="receiver") @JsonIgnore
     private Collection<Message> userReceiver = new ArrayList<>();
     
 
     // ################## Possessions ##################
 
-    @ManyToMany(mappedBy = "possessors")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
     private Collection<MailBox> possessorBoxes = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "possessors")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
     private Collection<Signing> possessorSigning = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "possessors")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
     private Collection<Seal> possessorSeals = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "authorized")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
     private Collection<MailBox> authorizedBoxes = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "authorized")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
     private Collection<Signing> authorizedSigning = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "authorized")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
     private Collection<Seal> authorizedSeals = new ArrayList<>();
 
 }
