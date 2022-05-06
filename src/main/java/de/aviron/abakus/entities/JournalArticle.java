@@ -5,11 +5,15 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.aviron.abakus.enums.JournalCategory;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class JournalArticle {
     
     @Id
@@ -17,7 +21,7 @@ public class JournalArticle {
     Integer id;
     
     // Ausgabe
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="issue_id")
     private JournalIssue issue;
 
@@ -28,7 +32,7 @@ public class JournalArticle {
     private String subtitle;
 
     // Verfasser
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="author_id")
     private Figure author;
 
@@ -36,7 +40,7 @@ public class JournalArticle {
     private Boolean isAnonymous;
 
     // Bild
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="picture_id")
     private Image picture;
 
@@ -45,17 +49,17 @@ public class JournalArticle {
     private JournalCategory category;
 
     // Antwort
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="answer_id")
     private JournalArticle answer;
 
     // Reihe
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="collection_id")
     private JournalCollection collection;
 
     // Event
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="event_id")
     private JournalEvent event;
 
@@ -74,10 +78,10 @@ public class JournalArticle {
 
     // ################## Relations ##################
 
-    @OneToMany(mappedBy="answer")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="answer")
     private Collection<JournalArticle> articleAnswers = new ArrayList<>();
 
-    @OneToMany(mappedBy="article")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="article")
     private Collection<JournalLetter> articleLetters = new ArrayList<>();
     
 }

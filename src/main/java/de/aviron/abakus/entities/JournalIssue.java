@@ -7,9 +7,11 @@ import java.util.Collection;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class JournalIssue {
     
     @Id
@@ -22,7 +24,7 @@ public class JournalIssue {
 
     // ################## Relations ##################
 
-    @OneToMany(mappedBy="issue")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="issue")
     private Collection<JournalArticle> articles = new ArrayList<>();
     
 }

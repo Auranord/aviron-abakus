@@ -5,10 +5,14 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Message {
     
     @Id
@@ -16,12 +20,12 @@ public class Message {
     Integer id;
 
     // Absender
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="sender_id")
     User sender;
 
     // Empfänger
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="receiver_id")
     User receiver;
 
@@ -43,11 +47,11 @@ public class Message {
     
     // ################## Relations ##################
 
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="reference_id")
     Message reference;
 
-    @OneToMany(mappedBy="reference")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="reference")
     Collection<Message> answers;
 
 }

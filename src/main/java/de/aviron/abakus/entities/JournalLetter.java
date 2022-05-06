@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class JournalLetter {
     
     @Id
@@ -15,12 +19,12 @@ public class JournalLetter {
     Integer id;
 
     // Artikel
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="article_id")
     private JournalArticle article;
 
     // Verfasser
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="author_id")
     private Figure author;
     

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.enums.UserSince;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -33,7 +35,7 @@ public class User {
     private UserRole role = UserRole.NONE;
 
     // Bild
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="picture_id")
     private Image picture;
 
@@ -75,16 +77,16 @@ public class User {
     
     // ################## Relations ##################
 
-    @OneToMany(mappedBy="owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="owner")
     private Collection<Figure> userFigures = new ArrayList<>();
 
-    @OneToMany(mappedBy="uploader")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="uploader")
     private Collection<Image> userPictures = new ArrayList<>();
 
-    @OneToMany(mappedBy="sender")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="sender")
     private Collection<Message> userSender = new ArrayList<>();
 
-    @OneToMany(mappedBy="receiver")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="receiver")
     private Collection<Message> userReceiver = new ArrayList<>();
     
 

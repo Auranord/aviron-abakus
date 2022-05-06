@@ -6,9 +6,11 @@ import java.util.Collection;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class MailBox {
     
     @Id
@@ -37,7 +39,7 @@ public class MailBox {
     @JoinTable(name = "mailbox_authorized", joinColumns = @JoinColumn(name = "box_id"), inverseJoinColumns = @JoinColumn(name = "figure_id"))
     private Collection<Figure> authorized = new ArrayList<>();
 
-    @OneToMany(mappedBy="box")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="box")
     private Collection<MailLetter> boxLetters = new ArrayList<>();
 
 }

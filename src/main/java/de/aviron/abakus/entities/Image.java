@@ -6,10 +6,14 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Image {
     
     @Id
@@ -20,7 +24,7 @@ public class Image {
     private String url;
 
     // Uploader
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="uploader_id")
     private User uploader;
     
@@ -36,10 +40,10 @@ public class Image {
     
     // ################## Relations ##################
     
-    @OneToMany(mappedBy="picture")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="picture") @JsonIgnore
     private Collection<User> userPictures = new ArrayList<>();
 
-    @OneToMany(mappedBy="picture")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="picture") @JsonIgnore
     private Collection<JournalArticle> articlePictures = new ArrayList<>();
 
 }

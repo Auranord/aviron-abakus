@@ -6,10 +6,14 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class MailLetter {
     
     @Id
@@ -17,7 +21,7 @@ public class MailLetter {
     Integer id;
 
     // Postfach
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="box_id")
     private MailBox box;
 

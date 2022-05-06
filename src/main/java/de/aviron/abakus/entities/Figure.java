@@ -5,10 +5,14 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Figure {
     
     @Id
@@ -16,7 +20,7 @@ public class Figure {
     private Integer id;
 
     // Besitzer
-    @ManyToOne
+     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="owner_id")
     private User owner;
 
@@ -32,10 +36,10 @@ public class Figure {
 
     // ################## Relations ##################
 
-    @OneToMany(mappedBy="author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
     private Collection<JournalArticle> figureArticles = new ArrayList<>();
 
-    @OneToMany(mappedBy="author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
     private Collection<JournalLetter> figureLetters = new ArrayList<>();
 
 }
