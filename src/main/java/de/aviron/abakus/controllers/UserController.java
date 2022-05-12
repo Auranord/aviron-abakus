@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.aviron.abakus.entities.Figure;
 import de.aviron.abakus.entities.User;
 import de.aviron.abakus.services.UserService;
 import lombok.AllArgsConstructor;
@@ -53,4 +54,9 @@ public class UserController {
         return ResponseEntity.ok(service.updateUser(character));
     }
 
+    @PostMapping(value="/add/{id}/figure")
+    @PreAuthorize("hasAuthority('user:write')")
+    ResponseEntity<User> addFigure(@PathVariable Integer id, @RequestBody Figure figure) {
+        return ResponseEntity.ok(service.addFigure(id, figure));
+    }
 }
