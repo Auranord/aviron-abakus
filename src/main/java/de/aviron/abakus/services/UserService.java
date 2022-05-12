@@ -1,9 +1,11 @@
 package de.aviron.abakus.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import de.aviron.abakus.entities.Figure;
 import de.aviron.abakus.entities.User;
 import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.repositories.UserRepository;
@@ -42,6 +44,18 @@ public class UserService {
         if(oldUser == null)
             return null;
             
+        return repository.save(user);
+    }
+
+    public User addFigure(Integer id, Figure figure) {
+        User user = repository.findById(id).orElse(null);
+        if(user == null)
+            return null;
+        Collection<Figure> figures = user.getUserFigures();
+        figure.setOwner(user);
+        figures.add(figure);
+        user.setUserFigures(figures);
+
         return repository.save(user);
     }
 
