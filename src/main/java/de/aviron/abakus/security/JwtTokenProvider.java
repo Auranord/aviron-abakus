@@ -1,6 +1,7 @@
 package de.aviron.abakus.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,8 @@ import de.aviron.abakus.config.JwtConfig;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
 
 @Component
 @Slf4j
@@ -31,7 +34,7 @@ public class JwtTokenProvider {
                 .setSubject(userEmail)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expiration))
-                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret())
+                .signWith(getKey(), SignatureAlgorithm.HS512)
                 .compact();
 
     }
@@ -41,10 +44,15 @@ public class JwtTokenProvider {
         return generateToken(user.getUsername());
     }
 
+    private SecretKey getKey() {
+        return Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes());
+    }
+
     public String getUserMailFromToken(String token) {
         Claims claims = Jwts
-                .parser()
-                .setSigningKey(jwtConfig.getSecret())
+                .parserBuilder()
+                .setSigningKey(getKey())
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -53,7 +61,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtConfig.getSecret()).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token);
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
@@ -65,8 +73,10 @@ public class JwtTokenProvider {
             log.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
             log.error("JWT claims string is empty.");
+        } catch (JwtException ex) {
+            log.error("Untrusted JWT.");
         }
-
+        
         return false;
     }
 
