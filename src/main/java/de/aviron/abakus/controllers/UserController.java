@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping(value="/{id}")
-    @PreAuthorize("hasAuthority('user:read')")
+    // @PreAuthorize("hasAuthority('user:read')") // TODO: allow own data
     ResponseEntity<User> getUser(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getUserById(id));
     }

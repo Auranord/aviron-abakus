@@ -52,7 +52,9 @@ public class AuthController {
                 )
         );
 
-        return ResponseEntity.ok(jwtTokenProvider.generateToken(authentication));
+        
+
+        return ResponseEntity.ok( "{ \"token\": \"" + jwtTokenProvider.generateToken(authentication) + "\" }");
     }
 
     @PostMapping(value = "/logout")

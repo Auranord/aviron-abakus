@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         http
         .csrf().disable() // TODO: enable
+        .cors().and()
         .authorizeRequests()
             // Grant permissions for public paths
             .antMatchers("/", "/index", "/register", "/login").permitAll()
