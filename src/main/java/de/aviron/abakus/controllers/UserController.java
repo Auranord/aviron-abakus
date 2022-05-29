@@ -4,16 +4,19 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.aviron.abakus.entities.Figure;
 import de.aviron.abakus.entities.User;
+import de.aviron.abakus.security.JwtTokenProvider;
 import de.aviron.abakus.services.UserService;
 import lombok.AllArgsConstructor;
 
@@ -23,6 +26,21 @@ import lombok.AllArgsConstructor;
 public class UserController {
 
     private UserService service;
+    private JwtTokenProvider jwtTokenProvider;
+
+    @GetMapping(value="/")
+    ResponseEntity<User> getOwnUsers(@RequestHeader (name="Authorization") String token) {
+
+        // TODO: create utils class
+        if (StringUtils.hasText(token) && token.startsWith("Bearer "))
+            token = token.substring(7);
+
+        // TODO: create utils class
+        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token))
+            return ResponseEntity.ok(service.getUserByEmail(jwtTokenProvider.getUserMailFromToken(token)));
+
+        return ResponseEntity.badRequest().build();
+    }
 
     @GetMapping(value="/all")
     @PreAuthorize("hasAuthority('user:read')")
@@ -31,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping(value="/{id}")
-    // @PreAuthorize("hasAuthority('user:read')") // TODO: allow own data
+    @PreAuthorize("hasAuthority('user:read')")
     ResponseEntity<User> getUser(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getUserById(id));
     }
