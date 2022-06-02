@@ -1,9 +1,11 @@
 package de.aviron.abakus.controllers;
 
 import de.aviron.abakus.entities.User;
+import de.aviron.abakus.enums.ErrorMessage;
 import de.aviron.abakus.requests.AuthRequest;
 import de.aviron.abakus.security.JwtTokenProvider;
 import de.aviron.abakus.services.UserService;
+import de.aviron.abakus.utils.ErrorProvider;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -27,11 +29,11 @@ public class AuthController {
     private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> RegisterUser(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<Object> RegisterUser(@RequestBody AuthRequest authRequest) {
         User presentUser = userService.getUserByEmail(authRequest.getEmail());
 
         if (presentUser != null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(ErrorProvider.getNode(ErrorMessage.USER_EXISTS));
         }
 
         User user = new User();
@@ -44,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> LoginUser(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<Object> LoginUser(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authRequest.getEmail(),
@@ -52,17 +54,7 @@ public class AuthController {
                 )
         );
 
-        
-
         return ResponseEntity.ok( "{ \"token\": \"" + jwtTokenProvider.generateToken(authentication) + "\" }");
-    }
-
-    @PostMapping(value = "/logout")
-    public ResponseEntity<String> LogoutUser() {
-
-        // TODO: Logout (Maybe only on frontend?)
-
-        return ResponseEntity.ok().build();
     }
 
 }
