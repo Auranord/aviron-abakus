@@ -31,6 +31,12 @@ public class Figure {
     private Integer activity;
 
 
+    // Transactions
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="client") @JsonIgnore
+    private Collection<BankTransaction> madeTransactions;
+
+
     // Fractions
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
