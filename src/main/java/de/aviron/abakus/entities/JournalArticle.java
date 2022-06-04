@@ -18,10 +18,10 @@ public class JournalArticle {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
     
     // Ausgabe
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="issue_id")
     private JournalIssue issue;
 
@@ -32,7 +32,7 @@ public class JournalArticle {
     private String subtitle;
 
     // Verfasser
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="author_id")
     private Figure author;
 
@@ -40,31 +40,31 @@ public class JournalArticle {
     private Boolean isAnonymous;
 
     // Bild
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="picture_id")
-    private Image picture;
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinColumn(name="illustration_id")
+    private Image illustration;
 
     // Sparte
     @Enumerated
     private JournalCategory category;
 
     // Antwort
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="answer_id")
     private JournalArticle answer;
 
     // Reihe
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="collection_id")
     private JournalCollection collection;
 
     // Event
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="event_id")
     private JournalEvent event;
 
     // Eingereicht
-    private Boolean isDone;
+    private Boolean isReady;
 
     // Artikel Wert
     private Integer value;

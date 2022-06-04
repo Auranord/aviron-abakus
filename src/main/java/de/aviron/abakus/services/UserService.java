@@ -51,10 +51,10 @@ public class UserService {
         User user = repository.findById(id).orElse(null);
         if(user == null)
             return null;
-        Collection<Figure> figures = user.getUserFigures();
+        Collection<Figure> figures = user.getFigures();
         figure.setOwner(user);
         figures.add(figure);
-        user.setUserFigures(figures);
+        user.setFigures(figures);
 
         return repository.save(user);
     }

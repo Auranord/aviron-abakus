@@ -17,18 +17,15 @@ public class JournalCollection {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // Name
     private String name;
 
-    // Verfasser
+    // Verfasser TODO: make extend Possesion? (B) 
     private Integer editor;
 
-
-    // ################## Relations ##################
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy="collection") @JsonIgnore
-    private Collection<JournalArticle> collectionArticles = new ArrayList<>();
+    private Collection<JournalArticle> includedArticles = new ArrayList<>();
     
 }

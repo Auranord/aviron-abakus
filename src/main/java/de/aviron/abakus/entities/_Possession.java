@@ -6,13 +6,14 @@ import lombok.Data;
 
 @Entity
 @Data
-public class _Template {
-    
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public class _Possession {
+        
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    // 
-    //private Object;
+    @OneToOne
+    private Authorities authorities;
 
 }

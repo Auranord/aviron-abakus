@@ -20,26 +20,39 @@ public class Figure {
     private Integer id;
 
     // Besitzer
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="owner_id")
     private User owner;
 
     // Name
     private String name;
 
-    // Barvermögen
-    private Integer money;
-
     // Botenpunkte
     private Integer activity;
 
 
-    // ################## Relations ##################
+    // Fractions
+
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinTable(name = "fraction_members", joinColumns = @JoinColumn(name = "figure_id"), inverseJoinColumns = @JoinColumn(name = "fraction_id"))
+    private Collection<Fraction> memberOf = new ArrayList<>();
+
+
+    // Journal
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
-    private Collection<JournalArticle> figureArticles = new ArrayList<>();
+    private Collection<JournalArticle> writenJournalAricles = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
-    private Collection<JournalLetter> figureLetters = new ArrayList<>();
+    private Collection<JournalLetter> writenJournalLetters = new ArrayList<>();
+
+
+    // Possesions
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningFigures") @JsonIgnore
+    private Collection<Authorities> ownedPossessions = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorizedFigures") @JsonIgnore
+    private Collection<Authorities> authorizedPossessions = new ArrayList<>();
 
 }

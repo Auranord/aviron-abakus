@@ -18,21 +18,21 @@ public class JournalEvent {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // Name
     private String title;
 
     // Datum und Zeit
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
 
     // Kommentar
     private String about;
 
-
-    // ################## Relations ##################
+    // Verfasser TODO: make extend Possesion? (B) 
+    private Integer editor;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event") @JsonIgnore
-    private Collection<JournalArticle> eventArticles = new ArrayList<>();
+    private Collection<JournalArticle> relatedArticles = new ArrayList<>();
     
 }

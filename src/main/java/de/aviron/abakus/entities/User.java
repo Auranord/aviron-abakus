@@ -25,7 +25,7 @@ public class User {
     private Integer id;
 
     @Column(unique = true)
-    private String email; // TODO: Maybe make email to primary key
+    private String email; 
 
     @JsonIgnore
     private String password;
@@ -36,8 +36,8 @@ public class User {
 
     // Bild
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="picture_id")
-    private Image picture;
+    @JoinColumn(name="avatar_id")
+    private Image avatar;
 
     // MC UUID
     @Column(unique = true)
@@ -74,40 +74,21 @@ public class User {
     // Spenden
     private Double donations;
 
-    
-    // ################## Relations ##################
-
+    // Figuren
     @OneToMany(cascade = CascadeType.ALL, mappedBy="owner") @JsonIgnore
-    private Collection<Figure> userFigures = new ArrayList<>();
+    private Collection<Figure> figures = new ArrayList<>();
 
+    // Bilder
     @OneToMany(cascade = CascadeType.ALL, mappedBy="uploader") @JsonIgnore
-    private Collection<Image> userPictures = new ArrayList<>();
+    private Collection<Image> uploadedImages = new ArrayList<>();
+
+    
+    // Messages
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="sender") @JsonIgnore
-    private Collection<Message> userSender = new ArrayList<>();
+    private Collection<Message> sendMessages = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="receiver") @JsonIgnore
-    private Collection<Message> userReceiver = new ArrayList<>();
+    private Collection<Message> receivedMessages = new ArrayList<>();
     
-
-    // ################## Possessions ##################
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
-    private Collection<MailBox> possessorBoxes = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
-    private Collection<Signing> possessorSigning = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "possessors") @JsonIgnore
-    private Collection<Seal> possessorSeals = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
-    private Collection<MailBox> authorizedBoxes = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
-    private Collection<Signing> authorizedSigning = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorized") @JsonIgnore
-    private Collection<Seal> authorizedSeals = new ArrayList<>();
-
 }

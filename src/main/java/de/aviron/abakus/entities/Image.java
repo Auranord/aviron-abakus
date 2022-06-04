@@ -18,13 +18,13 @@ public class Image {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // URL
     private String url;
 
     // Uploader
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="uploader_id")
     private User uploader;
     
@@ -35,15 +35,14 @@ public class Image {
     private String comment;
     
     // Upload Datum
-    private LocalDateTime date;
+    private LocalDateTime uploadDateTime;
 
-    
-    // ################## Relations ##################
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="picture") @JsonIgnore
-    private Collection<User> userPictures = new ArrayList<>();
+    // Uses
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="picture") @JsonIgnore
-    private Collection<JournalArticle> articlePictures = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="avatar") @JsonIgnore
+    private Collection<User> avatarOf = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="illustration") @JsonIgnore
+    private Collection<JournalArticle> illustrationOf = new ArrayList<>();
 
 }

@@ -18,10 +18,10 @@ public class MailLetter {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // Postfach
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="box_id")
     private MailBox box;
 
@@ -29,7 +29,7 @@ public class MailLetter {
     private String description;
 
     // Versende Zeitpunkt
-    private LocalDateTime received;
+    private LocalDateTime receiveDateTime;
 
     // Inhalt
     private String content;
@@ -37,19 +37,16 @@ public class MailLetter {
     // zerstört
     private Boolean destroyed;
 
-
-    // ################## Relations ##################
-
     // Unterschriften
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "signingLetters") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithSigning") @JsonIgnore
     private Collection<Signing> signings = new ArrayList<>();
     
     // Siegel
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "unbrokenSealLetters") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithUnbrokenSeals") @JsonIgnore
     private Collection<Seal> unbrokenSeals = new ArrayList<>();
 
     // gebrochene Siegel
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "brokenSealLetters") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithBrokenSeals") @JsonIgnore
     private Collection<Seal> brokenSeals = new ArrayList<>();
 
 }

@@ -18,14 +18,12 @@ public class JournalIssue {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // Datum der Ausgabe
     private LocalDate date;
 
-
-    // ################## Relations ##################
-
+    // Artikel
     @OneToMany(cascade = CascadeType.ALL, mappedBy="issue") @JsonIgnore
     private Collection<JournalArticle> articles = new ArrayList<>();
     

@@ -17,41 +17,41 @@ public class Message {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     // Absender
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="sender_id")
-    User sender;
+    private User sender;
 
     // Empfänger
-     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="receiver_id")
-    User receiver;
+    private User receiver;
 
     // Betreff
-    String subject;
+    private String subject;
 
     // Inhalt
-    String content;
+    private String content;
 
     // Sende Datum/Zeit
-    LocalDateTime date;
+    private LocalDateTime sendDateTime;
 
     // gelesen
-    Boolean isRead;
+    private Boolean isRead;
 
     // archiviert
-    Boolean isArchived;
+    private Boolean isArchived;
 
     
-    // ################## Relations ##################
+    // Answers
 
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="reference_id")
-    Message reference;
+    @JoinColumn(name="answering_id")
+    private Message answering;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="reference") @JsonIgnore
-    Collection<Message> answers;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="answering") @JsonIgnore
+    private Collection<Message> answers;
 
 }
