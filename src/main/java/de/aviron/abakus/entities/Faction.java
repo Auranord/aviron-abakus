@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class Fraction extends _Possession {
+public class Faction extends _Possession {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

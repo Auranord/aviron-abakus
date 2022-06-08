@@ -33,11 +33,11 @@ public class Authorities {
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "owner_fractions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "fractions_id"))
-    private Collection<Fraction> owningFractions;
+    private Collection<Faction> owningFractions;
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "trustee_fractions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "fractions_id"))
-    private Collection<Fraction> authorizedFractions;
+    private Collection<Faction> authorizedFractions;
                 
             
 }

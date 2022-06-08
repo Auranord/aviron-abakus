@@ -41,7 +41,7 @@ public class Figure {
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "fraction_members", joinColumns = @JoinColumn(name = "figure_id"), inverseJoinColumns = @JoinColumn(name = "fraction_id"))
-    private Collection<Fraction> memberOf = new ArrayList<>();
+    private Collection<Faction> memberOf = new ArrayList<>();
 
 
     // Journal
