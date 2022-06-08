@@ -44,6 +44,8 @@ public class Message {
     // archiviert
     private Boolean isArchived;
 
+    // löschen
+    private Boolean isDeleted;
     
     // Answers
 

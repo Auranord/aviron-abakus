@@ -16,9 +16,6 @@ public class BankVault {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    // Tresor
-    private Boolean isWallet;
-
     // Bank
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="bank_id")
@@ -31,6 +28,10 @@ public class BankVault {
 
     // Kontostand
     private Integer balance;
+
+    // Konten in Tresor
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="vault") @JsonIgnore
+    private Collection<BankAccount> accounts;
 
     // Ausgehende Überweisungen
     @OneToMany(cascade = CascadeType.ALL, mappedBy="senderVault") @JsonIgnore

@@ -19,18 +19,29 @@ public class Faction extends _Possession {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // Name
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "memberOf") @JsonIgnore
-    private Collection<Figure> members = new ArrayList<>();
+    // Kurzbeschreibung
+    private String description;
 
-    
-    // Possesions
+    // Trivia Artikel
+    private String trivia;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningFractions") @JsonIgnore
+    // Mitgliedschaften
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="faction") @JsonIgnore
+    private Collection<Membership> memberships = new ArrayList<>();
+
+    // Titel
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "faction") @JsonIgnore
+    private Collection<Title> titles = new ArrayList<>();
+
+    // Possessions
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningFactions") @JsonIgnore
     private Collection<Authorities> ownedPossessions = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorizedFractions") @JsonIgnore
-    private Collection<Authorities> authorizedPossessions = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trustedFactions") @JsonIgnore
+    private Collection<Authorities> trustedPossessions = new ArrayList<>();
 
 }

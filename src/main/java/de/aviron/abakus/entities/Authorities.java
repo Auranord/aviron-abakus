@@ -1,5 +1,6 @@
 package de.aviron.abakus.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Authorities {
-        
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,25 +21,33 @@ public class Authorities {
     private _Possession possession;
 
     // Figures
-  
+
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "owner_figures", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "figure_id"))
-    private Collection<Figure> owningFigures;
+    private Collection<Figure> owningFigures = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "trustee_figures", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "figure_id"))
-    private Collection<Figure> authorizedFigures;
+    private Collection<Figure> trustedFigures = new ArrayList<>();
 
-    // Fractions
-
-    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinTable(name = "owner_fractions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "fractions_id"))
-    private Collection<Faction> owningFractions;
+    // Factions
 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinTable(name = "trustee_fractions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "fractions_id"))
-    private Collection<Faction> authorizedFractions;
+    @JoinTable(name = "owner_factions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "factions_id"))
+    private Collection<Faction> owningFactions = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinTable(name = "trustee_factions", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "factions_id"))
+    private Collection<Faction> trustedFactions = new ArrayList<>();
                 
-            
-}
+    // Titles
 
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinTable(name = "owner_titles", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "titles_id"))
+    private Collection<Title> owningTitles = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinTable(name = "trustee_titles", joinColumns = @JoinColumn(name = "authorities_id"), inverseJoinColumns = @JoinColumn(name = "titles_id"))
+    private Collection<Title> trustedTitles = new ArrayList<>();
+
+}

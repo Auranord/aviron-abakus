@@ -24,9 +24,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // Email
     @Column(unique = true)
     private String email; 
 
+    // Passwort
     @JsonIgnore
     private String password;
 
@@ -62,10 +64,8 @@ public class User {
     // Banngrund
     private String banReason;
 
-    // Urlaubsmodus
+    // Urlaubsmodus Inaktiv TODO: combine to Enum
     private Boolean vacation;
-
-    // Inaktiv
     private Boolean inactive;
 
     // Statusnachricht
@@ -86,7 +86,7 @@ public class User {
     // Messages
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="sender") @JsonIgnore
-    private Collection<Message> sendMessages = new ArrayList<>();
+    private Collection<Message> sentMessages = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="receiver") @JsonIgnore
     private Collection<Message> receivedMessages = new ArrayList<>();

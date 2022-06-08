@@ -9,12 +9,14 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class JournalEvent {
+@EqualsAndHashCode(callSuper=true)
+public class JournalEvent extends _Possession {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,12 +28,12 @@ public class JournalEvent {
     // Datum und Zeit
     private LocalDateTime dateTime;
 
-    // Kommentar
+    // Beschreibung
     private String about;
 
-    // Verfasser TODO: make extend Possesion? (B) 
-    private Integer editor;
+    // TODO: list of attendance
 
+    // Relevante Artikel
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event") @JsonIgnore
     private Collection<JournalArticle> relatedArticles = new ArrayList<>();
     

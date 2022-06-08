@@ -19,16 +19,26 @@ public class Figure {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // Name
+    private String name;
+
+    // Kurzbeschreibung
+    private String description;
+
+    // Trivia Artikel
+    private String trivia;
+
     // Besitzer
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="owner_id")
     private User owner;
 
-    // Name
-    private String name;
-
     // Botenpunkte
     private Integer activity;
+
+    // Mitgliedschaften
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="member") @JsonIgnore
+    private Collection<Membership> memberships = new ArrayList<>();
 
 
     // Transactions
@@ -37,28 +47,21 @@ public class Figure {
     private Collection<BankTransaction> madeTransactions;
 
 
-    // Fractions
-
-    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinTable(name = "fraction_members", joinColumns = @JoinColumn(name = "figure_id"), inverseJoinColumns = @JoinColumn(name = "fraction_id"))
-    private Collection<Faction> memberOf = new ArrayList<>();
-
-
     // Journal
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
-    private Collection<JournalArticle> writenJournalAricles = new ArrayList<>();
+    private Collection<JournalArticle> writtenJournalArticles = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="author") @JsonIgnore
-    private Collection<JournalLetter> writenJournalLetters = new ArrayList<>();
+    private Collection<JournalLetter> writtenJournalLetters = new ArrayList<>();
 
 
-    // Possesions
+    // Possessions
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningFigures") @JsonIgnore
     private Collection<Authorities> ownedPossessions = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authorizedFigures") @JsonIgnore
-    private Collection<Authorities> authorizedPossessions = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trustedFigures") @JsonIgnore
+    private Collection<Authorities> trustedPossessions = new ArrayList<>();
 
 }

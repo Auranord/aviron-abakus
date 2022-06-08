@@ -28,14 +28,20 @@ public class MailLetter {
     // Beschreibung/Anzeigename
     private String description;
 
-    // Versende Zeitpunkt
+    // Zustellungs Zeitpunkt
     private LocalDateTime receiveDateTime;
+
+    // Betreff
+    private String subject;
 
     // Inhalt
     private String content;
 
+    // archiviert
+    private Boolean isArchived;
+
     // zerstört
-    private Boolean destroyed;
+    private Boolean isDestroyed;
 
     // Unterschriften
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithSigning") @JsonIgnore
@@ -50,4 +56,3 @@ public class MailLetter {
     private Collection<Seal> brokenSeals = new ArrayList<>();
 
 }
-

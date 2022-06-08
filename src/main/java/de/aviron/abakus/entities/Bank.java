@@ -21,8 +21,11 @@ public class Bank extends _Possession {
     // Name
     private String name;
 
-    // Beschreibung
+    // Kurzbeschreibung
     private String description;
+
+    // Trivia Artikel
+    private String trivia;
 
     // Währungs Name
     private String currencyName;
@@ -36,10 +39,6 @@ public class Bank extends _Possession {
     // Tresore
     @OneToMany(cascade = CascadeType.ALL, mappedBy="bank") @JsonIgnore
     private Collection<BankVault> vaults;
-
-    // Konten
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="bank") @JsonIgnore
-    private Collection<BankAccount> accounts;
 
     // Tresore mit Bankwährung
     @OneToMany(cascade = CascadeType.ALL, mappedBy="currency") @JsonIgnore

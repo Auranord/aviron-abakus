@@ -18,15 +18,15 @@ public class BankAccount extends _Possession {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    // Bank
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="bank_id")
-    private Bank bank;
-
     // Währung
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="currency_id")
     private Bank currency;
+
+    // Währung
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinColumn(name="vault_id")
+    private BankVault vault;
 
     // Kontostand
     private Integer balance;
@@ -40,8 +40,8 @@ public class BankAccount extends _Possession {
     // maximaler Kontostand
     private Integer maxBalance;
 
-    // Gesperrt
-    private Boolean isLocked;
+    // Eingefroren
+    private Boolean isFrozen;
 
     // Konto Gebühren
     private Integer absoluteIntervalFees;
@@ -68,5 +68,9 @@ public class BankAccount extends _Possession {
     // Eingehende Überweisungen
     @OneToMany(cascade = CascadeType.ALL, mappedBy="receiverAccount") @JsonIgnore
     private Collection<BankTransaction> incomingTransactions;
+
+    // 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="account") @JsonIgnore
+    private Collection<BankDeposit> deposits;
 
 }

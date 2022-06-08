@@ -27,8 +27,15 @@ public class Signing extends _Possession {
     // Inhalt
     private String content;
 
+    // TODO: Enum for styles
+
+    // 
     @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
     @JoinTable(name = "letter_signings", joinColumns = @JoinColumn(name = "signing_id"), inverseJoinColumns = @JoinColumn(name = "letter_id"))
     private Collection<MailLetter> lettersWithSigning = new ArrayList<>();
+
+    // 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="signing") @JsonIgnore
+    private Collection<JournalArticle> articlesWithSigning = new ArrayList<>();
 
 }

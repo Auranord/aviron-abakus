@@ -8,12 +8,14 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class JournalCollection {
+@EqualsAndHashCode(callSuper=true)
+public class JournalCollection extends _Possession {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,9 +24,10 @@ public class JournalCollection {
     // Name
     private String name;
 
-    // Verfasser TODO: make extend Possesion? (B) 
-    private Integer editor;
+    // Kurzbeschreibung
+    private String description;
 
+    // Beinhaltete Artikel
     @OneToMany(cascade = CascadeType.ALL, mappedBy="collection") @JsonIgnore
     private Collection<JournalArticle> includedArticles = new ArrayList<>();
     

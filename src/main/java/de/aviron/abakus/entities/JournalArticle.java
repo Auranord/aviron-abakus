@@ -36,8 +36,19 @@ public class JournalArticle {
     @JoinColumn(name="author_id")
     private Figure author;
 
-    // Anonym
-    private Boolean isAnonymous;
+    // Unterschriften
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinColumn(name="signing_id")
+    private Signing signing;
+    
+    // Siegel
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @JoinColumn(name="seal_id")
+    private Seal seal;
+
+    // gebrochene Siegel
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithBrokenSeals") @JsonIgnore
+    private Collection<Seal> brokenSeals = new ArrayList<>();
 
     // Bild
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
@@ -62,6 +73,8 @@ public class JournalArticle {
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     @JoinColumn(name="event_id")
     private JournalEvent event;
+
+    // TODO: Enum for formating
 
     // Eingereicht
     private Boolean isReady;

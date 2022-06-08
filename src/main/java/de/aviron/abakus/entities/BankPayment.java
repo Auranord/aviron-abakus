@@ -7,37 +7,29 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-public class JournalLetter {
+public class BankPayment {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    // Artikel
+    // Sender Tresor
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="article_id")
-    private JournalArticle article;
+    @JoinColumn(name="sender_wallet_id")
+    private BankWallet senderWallet;
 
-    // Verfasser
+    // Empfänger Tresor
     @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
-    @JoinColumn(name="author_id")
-    private Figure author;
-    
-    // Zeitpunkt
+    @JoinColumn(name="receiver_wallet_id")
+    private BankWallet receiverWallet;
+
+    // Überweisungs Menge
+    private Integer amount;
+
+    // Überweisungs Zeitpunkt
     private LocalDateTime dateTime;
-    
-    // Inhalt
-    private String content;
-    
-    // Sichtbar
-    private Boolean isVisible;
-    
-    // Zensurgrund
-    private String reason;
 
 }

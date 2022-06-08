@@ -48,6 +48,9 @@ public class BankTransaction {
     // Überweisungs Menge
     private Integer amount;
 
+    // Überweisungs Zeitpunkt
+    private LocalDateTime dateTime;
+
     // Sender Gebühren
     private Integer senderFees;
 
@@ -84,12 +87,5 @@ public class BankTransaction {
 
     // Empfänger Gelesen
     private Boolean receiverIsRead;
-
-
-    // TODO: ??? (B)
-    private LocalDateTime transactionDateTime;
-    private LocalDateTime processDateTime;
-    private Boolean isFinished;
-    private LocalDateTime finishDateTime;
 
 }

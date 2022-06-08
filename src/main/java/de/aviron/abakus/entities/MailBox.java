@@ -21,13 +21,17 @@ public class MailBox extends _Possession {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // Name
     private String name;
 
+    // Briefe in Mailbox
     @OneToMany(cascade = CascadeType.ALL, mappedBy="box") @JsonIgnore
     private Collection<MailLetter> letters = new ArrayList<>();
 
-    private Boolean isPublic;
+    // Geheim
+    private Boolean isSecret;
 
+    // Neue Briefe
     private Boolean hasNewMail;
 
 }
