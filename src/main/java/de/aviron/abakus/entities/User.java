@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.enums.UserSince;
+import de.aviron.abakus.enums.UserStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -64,12 +65,12 @@ public class User {
     // Banngrund
     private String banReason;
 
-    // Urlaubsmodus Inaktiv TODO: combine to Enum
-    private Boolean vacation;
-    private Boolean inactive;
+    // Urlaubsmodus Inaktiv
+    @Enumerated
+    private UserStatus status;
 
     // Statusnachricht
-    private String status;
+    private String statusComment;
 
     // Spenden
     private Double donations;
