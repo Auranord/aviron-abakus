@@ -1,11 +1,16 @@
 package de.aviron.abakus;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import de.aviron.abakus.controllers.AuthController;
+import de.aviron.abakus.entities.Figure;
+import de.aviron.abakus.entities.User;
 import de.aviron.abakus.enums.UserRole;
 import de.aviron.abakus.requests.AuthRequest;
 import de.aviron.abakus.services.UserService;
@@ -31,6 +36,37 @@ public class AvironAbakusApplication {
 			userService.setRole(userService.getUserByEmail("recruiter@test.de").getId(), UserRole.RECRUITER);
 			userService.setRole(userService.getUserByEmail("gamemaster@test.de").getId(), UserRole.GAMEMASTER);
 			userService.setRole(userService.getUserByEmail("admin@test.de").getId(), UserRole.ADMIN);
+
+			User user = userService.getUserByEmail("trial@test.de");
+			Collection<Figure> figures = new ArrayList<>();
+			figures.add(new Figure("Trialius", user));
+			user.setFigures(figures);
+			userService.updateUser(user);
+
+			user = userService.getUserByEmail("member@test.de");
+			figures = new ArrayList<>();
+			figures.add(new Figure("Memberius", user));
+			user.setFigures(figures);
+			userService.updateUser(user);
+
+			user = userService.getUserByEmail("recruiter@test.de");
+			figures = new ArrayList<>();
+			figures.add(new Figure("Recruiterius", user));
+			user.setFigures(figures);
+			userService.updateUser(user);
+
+			user = userService.getUserByEmail("gamemaster@test.de");
+			figures = new ArrayList<>();
+			figures.add(new Figure("Gamemasterius", user));
+			user.setFigures(figures);
+			userService.updateUser(user);
+
+			user = userService.getUserByEmail("admin@test.de");
+			figures = new ArrayList<>();
+			figures.add(new Figure("Adminius", user));
+			user.setFigures(figures);
+			userService.updateUser(user);
+			
 		};
 	}
 
