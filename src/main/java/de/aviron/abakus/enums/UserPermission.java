@@ -4,7 +4,8 @@ public enum UserPermission {
     FIGURE_READ("figure:read"),
     FIGURE_WRITE("figure:write"),
     USER_READ("user:read"),
-    USER_WRITE("user:write");
+    USER_WRITE("user:write"),
+    USER_OWN("user:own");
 
     private final String permission;
 

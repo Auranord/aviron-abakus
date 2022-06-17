@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.aviron.abakus.entities.Figure;
 import de.aviron.abakus.entities.User;
-import de.aviron.abakus.security.JwtTokenProvider;
+import de.aviron.abakus.requests.EmailRequest;
 import de.aviron.abakus.services.UserService;
+import de.aviron.abakus.utils.ControllerUtils;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -26,20 +27,16 @@ import lombok.AllArgsConstructor;
 public class UserController {
 
     private UserService service;
-    private JwtTokenProvider jwtTokenProvider;
+    private ControllerUtils controllerUtils;
 
     @GetMapping(value="/")
+    @PreAuthorize("hasAuthority('user:own')")
     ResponseEntity<User> getOwnUsers(@RequestHeader (name="Authorization") String token) {
 
-        // TODO: create utils class
-        if (StringUtils.hasText(token) && token.startsWith("Bearer "))
-            token = token.substring(7);
+        token = controllerUtils.getTokenFromAuthorization(token);
+        String userEmail = controllerUtils.getEmailFromToken(token);
 
-        // TODO: create utils class
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token))
-            return ResponseEntity.ok(service.getUserByEmail(jwtTokenProvider.getUserMailFromToken(token)));
-
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(service.getUserByEmail(userEmail));
     }
 
     @GetMapping(value="/all")
@@ -71,6 +68,15 @@ public class UserController {
     ResponseEntity<User> setUser(@RequestBody User character) {
         return ResponseEntity.ok(service.updateUser(character));
     }
+
+    /* 
+    @PutMapping(value="/update/email")
+    @PreAuthorize("hasAuthority('user:write')")
+    ResponseEntity<User> setOwnUserEmail(@RequestBody EmailRequest emailRequest) {
+        User user = service.getUserById(id)
+        return ResponseEntity.ok(service.updateUser(character));
+    }
+    */
 
     @PostMapping(value="/add/{id}/figure")
     @PreAuthorize("hasAuthority('user:write')")

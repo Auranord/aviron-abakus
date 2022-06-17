@@ -10,12 +10,12 @@ import com.google.common.collect.Sets;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public enum UserRole {
-    NONE(Sets.newHashSet()),
-    TRIAL(Sets.newHashSet(USER_READ, FIGURE_READ)),
-    MEMBER(Sets.newHashSet(USER_READ, FIGURE_READ)),
-    RECRUITER(Sets.newHashSet(USER_READ, FIGURE_READ)),
-    GAMEMASTER(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE)),
-    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE));
+    NONE(Sets.newHashSet(USER_OWN)),
+    TRIAL(Sets.newHashSet(USER_READ, FIGURE_READ, USER_OWN)),
+    MEMBER(Sets.newHashSet(USER_READ, FIGURE_READ, USER_OWN)),
+    RECRUITER(Sets.newHashSet(USER_READ, FIGURE_READ, USER_OWN)),
+    GAMEMASTER(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE, USER_OWN)),
+    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, FIGURE_READ, FIGURE_WRITE, USER_OWN));
 
     private final Set<UserPermission> permissions;
 
