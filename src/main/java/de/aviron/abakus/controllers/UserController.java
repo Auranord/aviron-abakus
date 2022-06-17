@@ -59,14 +59,14 @@ public class UserController {
 
     @PutMapping(value="/set/{id}")
     @PreAuthorize("hasAuthority('user:write')")
-    ResponseEntity<User> setUser(@PathVariable Integer id, @RequestBody User character) {
-        return ResponseEntity.ok(service.setUser(id, character));
+    ResponseEntity<User> setUser(@PathVariable Integer id, @RequestBody User user) {
+        return ResponseEntity.ok(service.setUser(id, user));
     }
 
     @PutMapping(value="/update")
     @PreAuthorize("hasAuthority('user:write')")
-    ResponseEntity<User> setUser(@RequestBody User character) {
-        return ResponseEntity.ok(service.updateUser(character));
+    ResponseEntity<User> updateUser(@RequestBody User user) {
+        return ResponseEntity.ok(service.updateUser(user));
     }
 
     /* 
