@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class JournalLetter {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // Artikel

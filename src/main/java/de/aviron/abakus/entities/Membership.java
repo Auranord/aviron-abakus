@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Membership {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // Mitglied

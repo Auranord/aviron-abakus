@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class JournalIssue {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // Datum der Ausgabe

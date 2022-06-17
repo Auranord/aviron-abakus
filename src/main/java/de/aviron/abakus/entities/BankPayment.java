@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class BankPayment {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // Sender Tresor

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class MailLetter {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // Postfach

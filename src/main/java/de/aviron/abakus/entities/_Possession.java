@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class _Possession {
         
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
