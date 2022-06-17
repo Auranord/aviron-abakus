@@ -4,13 +4,17 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @EqualsAndHashCode(callSuper=true)
 public class Bank extends _Possession {
     
@@ -37,15 +41,15 @@ public class Bank extends _Possession {
     private Integer maxVaults;
 
     // Tresore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="bank") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="bank")
     private Collection<BankVault> vaults;
 
     // Tresore mit Bankwährung
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="currency") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="currency")
     private Collection<BankVault> vaultsUsingCurrency;
 
     // Konten mit Bankwährung
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="currency") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="currency")
     private Collection<BankAccount> accountsUsingCurrency;
 
 }

@@ -5,7 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Message {
     
     @Id
@@ -20,12 +22,12 @@ public class Message {
     private Integer id;
 
     // Absender
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="sender_id")
     private User sender;
 
     // Empfänger
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="receiver_id")
     private User receiver;
 
@@ -49,11 +51,11 @@ public class Message {
     
     // Answers
 
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="answering_id")
     private Message answering;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="answering") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="answering")
     private Collection<Message> answers;
 
 }

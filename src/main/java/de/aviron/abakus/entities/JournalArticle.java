@@ -5,7 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import de.aviron.abakus.enums.JournalCategory;
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class JournalArticle {
     
     @Id
@@ -21,7 +23,7 @@ public class JournalArticle {
     private Integer id;
     
     // Ausgabe
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="issue_id")
     private JournalIssue issue;
 
@@ -32,26 +34,26 @@ public class JournalArticle {
     private String subtitle;
 
     // Verfasser
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="author_id")
     private Figure author;
 
     // Unterschriften
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="signing_id")
     private Signing signing;
     
     // Siegel
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seal_id")
     private Seal seal;
 
     // gebrochene Siegel
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithBrokenSeals") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lettersWithBrokenSeals")
     private Collection<Seal> brokenSeals = new ArrayList<>();
 
     // Bild
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="illustration_id")
     private Image illustration;
 
@@ -60,17 +62,17 @@ public class JournalArticle {
     private JournalCategory category;
 
     // Antwort
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="answer_id")
     private JournalArticle answer;
 
     // Reihe
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="collection_id")
     private JournalCollection collection;
 
     // Event
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="event_id")
     private JournalEvent event;
 
@@ -91,10 +93,10 @@ public class JournalArticle {
 
     // ################## Relations ##################
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="answer") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="answer")
     private Collection<JournalArticle> articleAnswers = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="article") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="article")
     private Collection<JournalLetter> articleLetters = new ArrayList<>();
     
 }

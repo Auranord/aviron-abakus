@@ -5,16 +5,18 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@EqualsAndHashCode(callSuper=true)
 public class MailBox extends _Possession {
     
     @Id
@@ -25,7 +27,7 @@ public class MailBox extends _Possession {
     private String name;
 
     // Briefe in Mailbox
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="box") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="box")
     private Collection<MailLetter> letters = new ArrayList<>();
 
     // Geheim

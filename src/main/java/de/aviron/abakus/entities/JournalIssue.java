@@ -6,7 +6,8 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class JournalIssue {
     
     @Id
@@ -24,7 +26,7 @@ public class JournalIssue {
     private LocalDate date;
 
     // Artikel
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="issue") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="issue")
     private Collection<JournalArticle> articles = new ArrayList<>();
     
 }

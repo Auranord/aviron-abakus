@@ -5,15 +5,17 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @EqualsAndHashCode(callSuper=true)
 public class JournalCollection extends _Possession {
     
@@ -28,7 +30,7 @@ public class JournalCollection extends _Possession {
     private String description;
 
     // Beinhaltete Artikel
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="collection") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="collection")
     private Collection<JournalArticle> includedArticles = new ArrayList<>();
     
 }

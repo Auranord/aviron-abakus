@@ -5,16 +5,18 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@EqualsAndHashCode(callSuper=true)
 public class Signing extends _Possession {
     
     @Id
@@ -30,12 +32,12 @@ public class Signing extends _Possession {
     // TODO: Enum for styles
 
     // 
-    @ManyToMany(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "letter_signings", joinColumns = @JoinColumn(name = "signing_id"), inverseJoinColumns = @JoinColumn(name = "letter_id"))
     private Collection<MailLetter> lettersWithSigning = new ArrayList<>();
 
     // 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="signing") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="signing")
     private Collection<JournalArticle> articlesWithSigning = new ArrayList<>();
 
 }

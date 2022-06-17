@@ -4,13 +4,17 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @EqualsAndHashCode(callSuper=true)
 public class BankAccount extends _Possession {
     
@@ -19,12 +23,12 @@ public class BankAccount extends _Possession {
     private Integer id;
 
     // Währung
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="currency_id")
     private Bank currency;
 
     // Währung
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vault_id")
     private BankVault vault;
 
@@ -62,15 +66,15 @@ public class BankAccount extends _Possession {
     private Double relativeReceptionFees;
 
     // Ausgehende Überweisungen
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="senderAccount") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="senderAccount")
     private Collection<BankTransaction> outgoingTransactions;
 
     // Eingehende Überweisungen
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="receiverAccount") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="receiverAccount")
     private Collection<BankTransaction> incomingTransactions;
 
     // 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="account") @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="account")
     private Collection<BankDeposit> deposits;
 
 }

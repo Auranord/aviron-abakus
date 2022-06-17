@@ -4,13 +4,17 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import de.aviron.abakus.enums.BankTransactionError;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class BankDeposit {
     
     @Id
@@ -18,12 +22,12 @@ public class BankDeposit {
     private Integer id;
 
     // 
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="wallet_id")
     private BankWallet wallet;
 
     // 
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
     private BankAccount account;
 

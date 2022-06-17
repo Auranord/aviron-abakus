@@ -5,12 +5,16 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Title {
     
     @Id
@@ -24,12 +28,12 @@ public class Title {
     private String description;
 
     // Fraktion
-    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="faction_id")
     private Faction faction;
 
     // Mitgliedschaften
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "titles") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "titles")
     private Collection<Membership> membershipsWithTitle = new ArrayList<>();
 
     // Rang
@@ -44,10 +48,10 @@ public class Title {
 
     // Possessions
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningTitles") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "owningTitles")
     private Collection<Authorities> ownedPossessions = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trustedTitles") @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "trustedTitles")
     private Collection<Authorities> trustedPossessions = new ArrayList<>();
 
 }
