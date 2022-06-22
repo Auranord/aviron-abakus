@@ -1,5 +1,6 @@
 package de.aviron.abakus.utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import de.aviron.abakus.security.JwtTokenProvider;
@@ -41,6 +43,14 @@ public class ControllerUtils {
         }
 
         return list;
+    }
+
+    public static Object updateObject(Object object, ObjectNode objectNode) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectReader objectReader = objectMapper.readerForUpdating(object);
+
+        return objectReader.readValue(objectNode);
     }
 
     public static ObjectNode getFieldsFromObject(Object object) {
