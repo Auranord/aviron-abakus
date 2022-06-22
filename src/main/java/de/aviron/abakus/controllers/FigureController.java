@@ -24,31 +24,31 @@ public class FigureController {
     private FigureService service;
 
     @GetMapping(value="/all")
-    @PreAuthorize("hasAuthority('figure:read')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<List<Figure>> getAllFigures() {
         return ResponseEntity.ok(service.getAllFigure());
     }
 
     @GetMapping(value="/{id}")
-    @PreAuthorize("hasAuthority('figure:read')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<Figure> getFigure(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getFigureById(id));
     }
 
     @PostMapping(value="/add")
-    @PreAuthorize("hasAuthority('figure:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<Figure> addFigure(@RequestBody Figure figure) {
         return ResponseEntity.ok(service.addFigure(figure));
     }
 
     @PutMapping(value="/set/{id}")
-    @PreAuthorize("hasAuthority('figure:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<Figure> setFigure(@PathVariable Integer id, @RequestBody Figure figure) {
         return ResponseEntity.ok(service.setFigure(id, figure));
     }
 
     @PutMapping(value="/update")
-    @PreAuthorize("hasAuthority('figure:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<Figure> updateFigure(@RequestBody Figure figure) {
         return ResponseEntity.ok(service.updateFigure(figure));
     }

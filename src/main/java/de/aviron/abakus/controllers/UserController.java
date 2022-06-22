@@ -30,7 +30,7 @@ public class UserController {
     private ControllerUtils controllerUtils;
 
     @GetMapping(value="/")
-    @PreAuthorize("hasAuthority('user:own')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> getOwnUsers(@RequestHeader (name="Authorization") String token) {
 
         token = controllerUtils.getTokenFromAuthorization(token);
@@ -40,38 +40,38 @@ public class UserController {
     }
 
     @GetMapping(value="/all")
-    @PreAuthorize("hasAuthority('user:read')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
     @GetMapping(value="/{id}")
-    @PreAuthorize("hasAuthority('user:read')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> getUser(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getUserById(id));
     }
 
     @PostMapping(value="/add")
-    @PreAuthorize("hasAuthority('user:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok(service.addUser(user));
     }
 
     @PutMapping(value="/set/{id}")
-    @PreAuthorize("hasAuthority('user:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> setUser(@PathVariable Integer id, @RequestBody User user) {
         return ResponseEntity.ok(service.setUser(id, user));
     }
 
     @PutMapping(value="/update")
-    @PreAuthorize("hasAuthority('user:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> updateUser(@RequestBody User user) {
         return ResponseEntity.ok(service.updateUser(user));
     }
 
     /* 
-    @PutMapping(value="/update/email")
-    @PreAuthorize("hasAuthority('user:write')")
+    @PutMapping(value="/update/{id}/email")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> setOwnUserEmail(@RequestBody EmailRequest emailRequest) {
         User user = service.getUserById(id)
         return ResponseEntity.ok(service.updateUser(character));
@@ -79,7 +79,7 @@ public class UserController {
     */
 
     @PostMapping(value="/add/{id}/figure")
-    @PreAuthorize("hasAuthority('user:write')")
+    @PreAuthorize("hasAuthority('test:test')")
     ResponseEntity<User> addFigure(@PathVariable Integer id, @RequestBody Figure figure) {
         return ResponseEntity.ok(service.addFigure(id, figure));
     }
