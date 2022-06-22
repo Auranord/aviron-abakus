@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .cors().and()
         .authorizeRequests()
             // Grant permissions for public paths
-            .antMatchers("/health", "/latenz", "/register", "/login").permitAll()
+            .antMatchers("/health", "/latenz", "/register", "/login", "/test").permitAll()
             .anyRequest()
             .authenticated()
         .and()
