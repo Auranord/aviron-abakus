@@ -1,13 +1,12 @@
 package de.aviron.abakus.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import de.aviron.abakus.security.JwtTokenProvider;
@@ -31,54 +30,70 @@ public class ControllerUtils {
 
         return jwtTokenProvider.getUserMailFromToken(token);
     }
-
-    // url: http://bbbbbbbbcccccvvvvvvv?key1=x,y,z&key2=y,z&key3=z
-    // return: {"key1": "x,y,z", "key2": "y,z", "key3": "z",}
-    public static Map<String, String> getKeysFromUrl(String url) {
-        String [] pairs = url.split("\\?")[1].split(("&"));
-        Map<String, String> map = new HashMap<>();
-
-        for (String pair : pairs) {
-            if(pair.contains("=")){
-                String [] result = pair.split("=");
-
-                String key = result[0];
-
-                String value = result[1];
-                if(!map.containsKey(key)){
-                    map.put(key, value);
-                }
-            }
-        }
-
-        return map;
-    }
     
+    public static List<String> getFieldsFromString(String fields) {
 
-    // url: http://bbbbbbbbcccccvvvvvvv?key1=x,y,z;key2=y,z;key3=z  / key: "key2"
-    // return: {"y", "z"}
-    public static List<String> getFieldsFromKey(String url, String key) {
-
-        Map<String,String> map = getKeysFromUrl(url);
         ArrayList<String> list = new ArrayList<String>();
-        
-        if(map.containsKey(key)){
-            String [] values = map.get(key).split(",");
-            for (String value : values) {
-                list.add(value);
-            }
+        String [] values = fields.split(",");
+
+        for (String value : values) {
+            list.add(value);
         }
 
         return list;
     }
 
-    // jsonObject: "{ name: x, email: y, time: z}"  /  fields: { "name", "email" }
-    // return: "{ name: x, email: y}"
-    public static ObjectNode getFieldsFromJson(ObjectNode jsonObject, List<String> fields) {
+    public static ObjectNode getFieldsFromObject(Object object) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode objectNode = objectMapper.valueToTree(object);
+
+        return objectNode;
+    }
+
+    public static ObjectNode getFieldsFromObject(Object object, List<String> fields) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode returnNode = objectMapper.createObjectNode();
+        ObjectNode objectNode = objectMapper.valueToTree(object);
+
         for (String field : fields) {
-            jsonObject.remove(field);
+            returnNode.set(field, objectNode.get(field));
         }
-        return jsonObject;
+
+        return returnNode;
+    }
+
+    public static List<ObjectNode> getFieldsFromObjects(List<?> objects) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<ObjectNode> returnNodeList = new ArrayList<>();
+
+        for (Object object : objects) {
+            returnNodeList.add(objectMapper.valueToTree(object));
+        }
+
+        return returnNodeList;
+    }
+
+    public static List<ObjectNode> getFieldsFromObjects(List<?> objects, List<String> fields) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<ObjectNode> returnNodeList = new ArrayList<>();
+        List<ObjectNode> objectNodeList = new ArrayList<>();
+
+        for (Object object : objects) {
+            returnNodeList.add(objectMapper.createObjectNode());
+            objectNodeList.add(objectMapper.valueToTree(object));
+        }
+
+        for (int i = 0; i < objects.size(); i++) {
+            for (String field : fields) {
+                returnNodeList.get(i).set(field, objectNodeList.get(i).get(field)); 
+            }
+        }
+
+        return returnNodeList;
     }
 
 }
